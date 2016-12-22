@@ -18,13 +18,14 @@ const StargazersPage = class StargazersPage extends Component {
           title='Stargazers'
         />
         <h1>Stargazers</h1>
-        <Link to='/'>Back to Repos</Link>
+        <h2><Link to='/'>Back to Repos</Link></h2>
         {this.props.stargazers &&
           <ul>
             {this.props.stargazers.stargazers.map((stargazer) =>
               <li key={stargazer.id}>
                 <h2>{stargazer.login}</h2>
                 <img src={stargazer.avatar_url} width='50' height='50' />
+                <p><Link to='/'>Back to Repos</Link></p>
               </li>
             )}
           </ul>
