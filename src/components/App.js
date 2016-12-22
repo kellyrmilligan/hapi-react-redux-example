@@ -1,6 +1,7 @@
 import React from 'react'
 import TransitionManager from 'react-redux-transition-manager'
 import Helmet from 'react-helmet'
+import NProgress from 'nprogress'
 
 const ErrorThing = (props) => (
   <div className='Error'>Ooops! there was an error...</div>
@@ -17,8 +18,8 @@ const App = (props) =>
       titleTemplate='%s | Hapi react redux example'
     />
     <TransitionManager {...props}
-      onFetchStart={() => console.log('started fetching data for routes')}
-      onFetchEnd={() => console.log('finished fetching data for routes')}
+      onFetchStart={() => NProgress.start()}
+      onFetchEnd={() => NProgress.done()}
       onError={(err) => console.log('an error happened while fetching data for routes ', err)}
       FetchingIndicator={<LoaderThing />}
       ErrorIndicator={<ErrorThing />}
