@@ -15,7 +15,8 @@ function after (server, next) {
       routes: clientRoutes,
       layout: layout,
       config: {
-        API_URL: process.env.API_URL
+        API_URL: '/api', // the client is going to go through a proxy
+        GITHUB_API_TOKEN: process.env.GITHUB_API_TOKEN // normally this would be through an auth process, and associated with your auth'd user
       }, // if you want to filter the config down at all, ie some api secret key should only be on server, create a new object or filter it down further
       assets: webpackAssets,
       configureStore
@@ -23,8 +24,8 @@ function after (server, next) {
 
     server.hapiReactRedux(options)
 
-    // configure teh service client for requests
-    serviceClient.host = process.env.API_URL
+    // configure the service client for requests
+    serviceClient.apiUrl = process.env.API_URL
 
     server.route(serverRoutes)
     return next()
@@ -33,6 +34,7 @@ function after (server, next) {
 
 function exampleApp (server, options, next) {
   server.dependency([
+    'h2o2',
     'hapi-react-redux'
   ], after)
 

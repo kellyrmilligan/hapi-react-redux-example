@@ -19,9 +19,6 @@ module.exports = {
   entry: {
     app: [
       './client.js'
-    ],
-    css: [
-      './css.js'
     ]
   },
   output: {
@@ -100,6 +97,7 @@ module.exports = {
     ? 'eval-source-map'
     : 'source-map',
   devServer: {
+    contentBase: path.resolve(__dirname, './build/public'),
     stats: 'errors-only',
     publicPath: '/static/',
     port: port

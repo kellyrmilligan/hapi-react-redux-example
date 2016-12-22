@@ -24,7 +24,7 @@ export default class Layout extends Component {
           {head.script.toComponent()}
           <link rel='shortcut icon' href='/favicon.ico' />
           <meta name='viewport' content='width=device-width, initial-scale=1' />
-          <link href={assets.app.css} rel='stylesheet' />
+          <link id='css-bundle' href={assets.app.css} rel='stylesheet' />
         </head>
         <body>
           <div id='react-root' dangerouslySetInnerHTML={{ __html: content }} />

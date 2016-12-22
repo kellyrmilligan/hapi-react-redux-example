@@ -12,7 +12,8 @@ https://github.com/webpack/extract-text-webpack-plugin/issues/30#issuecomment-26
 for now it just refreshes the page all the time. a fallback is to add style loader in dev only.
 - exclude moment locales
 - remove redux form and validator when building sample app
-- skim through survivejs, create-react-app, tcwebpack for stuff? look at just adding this to create-react-app?
+- skim through CRA, others to tweak/improve webpack config
 - group scss with components?
 - add jest configuration and some tests
 - add flow?
+- redux dev tools on client

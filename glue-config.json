@@ -53,6 +53,9 @@
       "plugin": "inert"
     },
     {
+      "plugin": "h2o2"
+    },
+    {
       "plugin": "hapi-react-redux"
     },
     {

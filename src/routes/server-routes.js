@@ -11,6 +11,16 @@ export default [
   },
   {
     method: 'GET',
+    path: '/api/{param*}',
+    handler: {
+      proxy: {
+        passThrough: true,
+        uri: `${process.env.API_URL}/{param}`
+      }
+    }
+  },
+  {
+    method: 'GET',
     path: '/static/{param*}',
     config: {
       cache: {

@@ -1066,7 +1066,7 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
-boom@3.x.x:
+boom@3.X.X, boom@3.x.x:
   version "3.2.2"
   resolved "https://registry.npmjs.org/boom/-/boom-3.2.2.tgz#0f0cc5d04adc5003b8c7d71f42cca7271fef0e78"
   dependencies:
@@ -2768,6 +2768,15 @@ growly@^1.2.0:
   version "1.3.0"
   resolved "https://registry.npmjs.org/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
 
+h2o2@^5.4.0:
+  version "5.4.0"
+  resolved "https://registry.npmjs.org/h2o2/-/h2o2-5.4.0.tgz#d6857ca05355200c890b34a66606caba0229ed58"
+  dependencies:
+    boom "3.X.X"
+    hoek "4.X.X"
+    joi "9.X.X"
+    wreck "9.X.X"
+
 handle-thing@^1.2.4:
   version "1.2.5"
   resolved "https://registry.npmjs.org/handle-thing/-/handle-thing-1.2.5.tgz#fd7aad726bf1a5fd16dfc29b2f7a6601d27139c4"
@@ -2920,7 +2929,7 @@ hoek@2.x.x:
   version "2.16.3"
   resolved "https://registry.npmjs.org/hoek/-/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
 
-hoek@4.x.x, hoek@^4.1.0:
+hoek@4.X.X, hoek@4.x.x, hoek@^4.1.0:
   version "4.1.0"
   resolved "https://registry.npmjs.org/hoek/-/hoek-4.1.0.tgz#4a4557460f69842ed463aa00628cc26d2683afa7"
 
@@ -3645,7 +3654,7 @@ joi@8.1.x:
     moment "2.x.x"
     topo "2.x.x"
 
-joi@9.x.x:
+joi@9.X.X, joi@9.x.x:
   version "9.2.0"
   resolved "https://registry.npmjs.org/joi/-/joi-9.2.0.tgz#3385ac790192130cbe230e802ec02c9215bbfeda"
   dependencies:
@@ -4463,6 +4472,10 @@ npmlog@^4.0.0, npmlog@^4.0.1:
     console-control-strings "~1.1.0"
     gauge "~2.7.1"
     set-blocking "~2.0.0"
+
+nprogress@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.npmjs.org/nprogress/-/nprogress-0.2.0.tgz#cb8f34c53213d895723fcbab907e9422adbcafb1"
 
 num2fraction@^1.2.2:
   version "1.2.2"
@@ -6622,6 +6635,13 @@ wreck@10.x.x:
   resolved "https://registry.npmjs.org/wreck/-/wreck-10.0.0.tgz#98ab882f85e16a526332507f101f5a7841162278"
   dependencies:
     boom "4.x.x"
+    hoek "4.x.x"
+
+wreck@9.X.X:
+  version "9.0.0"
+  resolved "https://registry.npmjs.org/wreck/-/wreck-9.0.0.tgz#1de63d49bb07b94fe718864b8be63176e63331ec"
+  dependencies:
+    boom "3.x.x"
     hoek "4.x.x"
 
 write-file-atomic@^1.1.2:

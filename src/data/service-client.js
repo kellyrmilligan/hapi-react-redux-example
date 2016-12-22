@@ -1,3 +1,3 @@
-import request from 'superagent'
+import ServiceClient from 'lib/service-client'
 
-export default request
+export default ServiceClient()
