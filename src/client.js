@@ -27,11 +27,15 @@ history.listen((location) => {
   // track stuff here
 })
 
+function shouldUpdateScroll (prevRouterProps, currentRouterProps) {
+  return true
+}
+
 match({ routes, location }, (error, redirectLocation, renderProps) => {
   if (error) console.error(error)
   render(
     <Provider store={store}>
-      <Router routes={routes} history={history} render={applyRouterMiddleware(useScroll())} />
+      <Router routes={routes} history={history} render={applyRouterMiddleware(useScroll(shouldUpdateScroll))} />
     </Provider>,
     document.getElementById('react-root'),
     () => {}
