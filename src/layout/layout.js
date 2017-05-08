@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 
 export default class Layout extends Component {
@@ -12,7 +13,7 @@ export default class Layout extends Component {
 
   render () {
     const { assets, content, state } = this.props
-    const head = Helmet.rewind()
+    const head = Helmet.renderStatic()
 
     return (
       <html lang='en-us'>
@@ -27,7 +28,7 @@ export default class Layout extends Component {
           <link id='css-bundle' href={assets.app.css} rel='stylesheet' />
         </head>
         <body>
-          <div id='react-root' dangerouslySetInnerHTML={{ __html: content }} />
+          <div id='root' dangerouslySetInnerHTML={{ __html: content }} />
           <script dangerouslySetInnerHTML={{ __html: `window.__data=${state}` }} charSet='UTF-8' />
           <script src={assets.app.js} defer />
         </body>

@@ -1,22 +1,19 @@
 import React, { Component } from 'react'
 import Helmet from 'react-helmet'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 
 import { fetchOrgRepos, getOrgRepos } from 'data/org-repos'
 
-const HomePage = class HomePage extends Component {
+const Home = class Home extends Component {
 
-  static fetch (params, query, { dispatch, getState }) {
+  static fetch (match, location, { dispatch }) {
     return dispatch(fetchOrgRepos('hapijs'))
   }
 
   render () {
     return (
       <main>
-        <Helmet
-          title='Repos'
-        />
         <h1>Repos</h1>
         {this.props.orgRepos &&
           <ul>
@@ -43,4 +40,4 @@ const mapStateToProps = (state, ownProps) => {
 
 export default connect(
   mapStateToProps
-)(HomePage)
+)(Home)

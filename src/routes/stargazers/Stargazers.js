@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import Helmet from 'react-helmet'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 
 import { fetchStargazers, getStargazers } from 'data/stargazers'
 
 const StargazersPage = class StargazersPage extends Component {
 
-  static fetch (params, query, { dispatch, getState }) {
-    return dispatch(fetchStargazers(params.owner, params.repo))
+  static fetch (match, location, { dispatch }) {
+    return dispatch(fetchStargazers(match.params.owner, match.params.repo))
   }
 
   render () {

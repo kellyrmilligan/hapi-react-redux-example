@@ -4,16 +4,10 @@ This is an example app using [hapi-react-redux](https://github.com/kellyrmilliga
 hapi-react-redux was built to be a module on it's own so that you can integrate it as you please. this is just one way to do it.
 
 ### running the app
-you will need to get something for github to be accessible to the app?
+you will need to generate a personal access token in github. Then in your terminal export this variable as `GITHUB_API_TOKEN`, either when you run the app, like `GITHUB_API_TOKEN=[insert token here] yarn start` or export it in your bash profile.
 
 ### TODO
-- trying to get hot css reloading working with extract text plugin, see this issue:
-https://github.com/webpack/extract-text-webpack-plugin/issues/30#issuecomment-263279212
-for now it just refreshes the page all the time. a fallback is to add style loader in dev only.
-- exclude moment locales
-- remove redux form and validator when building sample app
-- skim through CRA, others to tweak/improve webpack config
-- group scss with components?
-- add jest configuration and some tests
-- add flow?
-- redux dev tools on client
+- tackle scss. full page reload is ok.
+- webpack server side?
+- fetch api instead of superagent
+- babel-polyfill in webpack

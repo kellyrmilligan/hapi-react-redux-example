@@ -1,15 +1,33 @@
 import React from 'react'
-import { Route, IndexRoute } from 'react-router'
-
 import App from 'components/App'
-import Home from 'routes/home/Home.js'
-import Stargazers from 'routes/stargazers/Stargazers.js'
+import Home from 'routes/home/Home'
+import Stargazers from 'routes/stargazers/Stargazers'
 
-const routes = (
-  <Route path='/' component={App}>
-    <IndexRoute component={Home} />
-    <Route path='/repos/:owner/:repo/stargazers' component={Stargazers} />
-  </Route>
+const NotFound = () => (
+  <main>
+    <h1>Not found</h1>
+    <p>We could not figure out what you wanted!</p>
+  </main>
 )
+
+const routes = [
+  {
+    component: App,
+    routes: [
+      {
+        path: '/',
+        exact: true,
+        component: Home
+      },
+      {
+        path: '/repos/:owner/:repo/stargazers',
+        component: Stargazers
+      },
+      {
+        component: NotFound
+      }
+    ]
+  }
+]
 
 export default routes

@@ -55,7 +55,7 @@ export function fetchOrgRepos (org) {
           dispatch(fetchOrgReposSuccess(res.body))
         })
         .catch((err, payload) => {
-          resolve(err, payload)
+          reject(err, payload)
           dispatch(fetchOrgReposError(err, payload))
         })
     })
