@@ -1,6 +1,10 @@
 import Hapi from 'hapi'
 import Hoek from 'hoek'
 import Good from 'good'
+import fs from 'fs'
+import path from 'path'
+
+import 'scss/main.scss'
 
 module.exports = function (done) {
 
@@ -18,7 +22,11 @@ module.exports = function (done) {
   }
 
   const server = new Hapi.Server(options)
-  console.log(process.env)
+
+  const webpackAssets = fs.readFileSync(path.join(__dirname, './webpack-assets.json'), 'utf8')
+
+  console.log(webpackAssets)
+
   server.connection({
     port: process.env.SERVER_PORT
   })

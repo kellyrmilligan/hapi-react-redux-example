@@ -12,3 +12,6 @@ you will need to generate a personal access token in github. Then in your termin
 - fetch api instead of superagent
 - babel-polyfill in webpack
 - try getting rid of glue to have a clearer path towards compiling? not sure.
+- reverify scss loader settings
+- reverify postcss settings
+- webpack server watch, nodemon reload?

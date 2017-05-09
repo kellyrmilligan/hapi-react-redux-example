@@ -24,6 +24,15 @@ module.exports = {
       './index.js'
     ]
   },
+  node: {
+    console: false,
+    global: false,
+    process: false,
+    __filename: false,
+    __dirname: false,
+    Buffer: false,
+    setImmediate: false
+  },
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, './build')
