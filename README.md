@@ -11,3 +11,4 @@ you will need to generate a personal access token in github. Then in your termin
 - webpack server side?
 - fetch api instead of superagent
 - babel-polyfill in webpack
+- try getting rid of glue to have a clearer path towards compiling? not sure.

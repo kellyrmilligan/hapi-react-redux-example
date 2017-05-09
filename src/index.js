@@ -1,6 +1,9 @@
 const Hoek = require('hoek')
 const cluster = require('cluster')
-const server = require('../server')
+const server = require('./server')
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 function startServer () {
   server((err, server) => {

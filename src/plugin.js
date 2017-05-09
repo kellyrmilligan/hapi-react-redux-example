@@ -1,10 +1,14 @@
 import Hoek from 'hoek'
+import path from 'path'
 import serverRoutes from 'routes/server-routes'
 import clientRoutes from 'routes/client-routes'
 import layout from 'layout/layout'
 import configureStore from 'store/configure-store'
 import serviceClient from 'data/service-client'
-import webpackAssets from './webpack-assets'
+
+import 'scss/main.scss'
+
+const webpackAssets = fs.readFileSync(path.resolve('./webpack-assets.json'), 'utf8')
 
 function after (server, next) {
   server.register([
