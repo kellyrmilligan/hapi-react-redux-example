@@ -25,12 +25,14 @@ export default class Layout extends Component {
           {head.script.toComponent()}
           <link rel='shortcut icon' href='/favicon.ico' />
           <meta name='viewport' content='width=device-width, initial-scale=1' />
-          <link id='css-bundle' href={assets.app.css} rel='stylesheet' />
+          {process.env.NODE_ENV !== 'development' &&
+            <link href={`/static/assets${assets['main.css']}`} rel='stylesheet' />
+          }
         </head>
         <body>
           <div id='root' dangerouslySetInnerHTML={{ __html: content }} />
           <script dangerouslySetInnerHTML={{ __html: `window.__data=${state}` }} charSet='UTF-8' />
-          <script src={assets.app.js} defer />
+          <script src={`/static/assets${assets['main.js']}`} defer />
         </body>
       </html>
     )

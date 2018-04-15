@@ -1,18 +1,24 @@
-const Hoek = require('hoek')
-const cluster = require('cluster')
-const server = require('./server')
 import dotenv from 'dotenv'
+import cluster from 'cluster'
+import initServer from './server'
 
 dotenv.config()
 
-function startServer () {
-  server((err, server) => {
-    Hoek.assert(!err, err)
-    server.start((err) => {
-      Hoek.assert(!err, err)
-      server.log('info', `Server running at: ${server.info.uri}`)
+async function startServer () {
+  try {
+    const server = await initServer()
+    await server.start()
+    console.log(`Server running at: ${server.info.uri}`)
+
+    process.on('unhandledRejection', (err) => {
+    	console.log(err)
+    	process.exit(1)
     })
-  })
+  } catch (err) {
+    console.log(err)
+    process.exit(1)
+  }
+
 }
 
 if (process.env.NODE_ENV !== 'development') {

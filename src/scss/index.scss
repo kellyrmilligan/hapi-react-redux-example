@@ -4,6 +4,14 @@
 
 @import "~nprogress/nprogress.css";
 
+::placeholder {
+  color: gray;
+}
+
+button {
+  border-radius: 2px;
+}
+
 body {
-  background-color: aliceblue;
+  background-color: goldenrod;
 }

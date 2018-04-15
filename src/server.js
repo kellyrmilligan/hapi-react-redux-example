@@ -1,54 +1,40 @@
 import Hapi from 'hapi'
-import Hoek from 'hoek'
-import Good from 'good'
-import fs from 'fs'
-import path from 'path'
+import Inert from 'inert'
+import Pino from 'hapi-pino'
+import HapiReactRedux from 'hapi-react-redux'
+import H2o2 from 'h2o2'
 
-import 'scss/main.scss'
+// this is the app, implemented as a plugin!
+import App from './plugin'
 
-module.exports = function (done) {
+const server = Hapi.server({
+	port: process.env.APP_SERVER_PORT,
+	host: process.env.APP_SERVER_HOST
+})
 
-  const options = {
-    debug: {
-      log: [
-        'error',
-        'connection',
-        'client'
-      ],
-      request: [
-        'error'
-      ]
+const init = async () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await server.register(HapiReactRedux)
+      await server.register({ plugin: H2o2 })
+      await server.register(Inert)
+      await server.register(App)
+    	await server.register({
+    		plugin: Pino,
+        options: {
+          prettyPrint: true,
+          logEvents: [
+            'response',
+            'request-error'
+          ]
+      	}
+      })
+      resolve(server)
+    } catch (err) {
+      reject(err)
     }
-  }
-
-  const server = new Hapi.Server(options)
-
-  const webpackAssets = fs.readFileSync(path.join(__dirname, './webpack-assets.json'), 'utf8')
-
-  console.log(webpackAssets)
-
-  server.connection({
-    port: process.env.SERVER_PORT
   })
-
-  server.register({
-    register: Good,
-    options: {
-        reporters: {
-            console: [{
-                module: 'good-squeeze',
-                name: 'Squeeze',
-                args: [{
-                    response: '*',
-                    log: '*'
-                }]
-            }, {
-                module: 'good-console'
-            }, 'stdout']
-        }
-    }
-  }, (err) => {
-    done(err, server)
-  })
-
 }
+
+
+module.exports = init

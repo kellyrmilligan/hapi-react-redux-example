@@ -1,7 +1,6 @@
 
-import 'babel-polyfill'
 import React from 'react'
-import { render } from 'react-dom'
+import { hydrate } from 'react-dom'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { renderRoutes } from 'react-router-config'
@@ -10,12 +9,12 @@ import routes from 'routes/client-routes'
 import serviceClient from 'data/service-client'
 import configureStore from 'store/configure-store'
 
-import './css'
+import './scss/index.scss'
 
 const store = configureStore(window.__data)
-serviceClient.apiUrl = store.getState().config.API_URL // this is passed to the client when you configure the plugin
+serviceClient.apiUrl = process.env.APP_API_URL
 
-render(
+hydrate(
   <Provider store={store}>
     <Router>
       {renderRoutes(routes)}

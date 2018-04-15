@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import routes from 'routes/client-routes'
 import ScrollToTop from 'components/ScrollToTop'
 
-NProgress.configure({ showSpinner: false })
+NProgress.configure({ showSpinner: true })
 
 class App extends Component {
 

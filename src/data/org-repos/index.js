@@ -41,16 +41,10 @@ export function fetchOrgRepos (org) {
   return (dispatch, getState, serviceClient) => {
     dispatch(fetchOrgReposLoading())
 
-    const { GITHUB_API_TOKEN } = getState().config
-
     return new Promise((resolve, reject) => {
       return serviceClient
-        .get(`/orgs/${org}/repos`, {
-          headers: {
-            'Authorization': `token ${GITHUB_API_TOKEN}`
-          }
-        })
-        .then((res) => {
+        .get(`/orgs/${org}/repos`)
+        .then(res => {
           resolve(res.body)
           dispatch(fetchOrgReposSuccess(res.body))
         })

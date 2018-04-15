@@ -69,23 +69,23 @@ export default class ServiceClient {
     return serviceCall
   }
 
-  get (path, options, callback) {
+  get (path, options={}, callback) {
     return this.makeRequest('GET', path, options, callback)
   }
 
-  del (path, options, callback) {
+  del (path, options={}, callback) {
     return this.makeRequest('DELETE', path, options, callback)
   }
 
-  post (path, options, callback) {
+  post (path, options={}, callback) {
     return this.makeRequest('POST', path, options, callback)
   }
 
-  patch (path, options, callback) {
+  patch (path, options={}, callback) {
     return this.makeRequest('PATCH', path, options, callback)
   }
 
-  put (path, options, callback) {
+  put (path, options={}, callback) {
     return this.makeRequest('PUT', path, options, callback)
   }
 

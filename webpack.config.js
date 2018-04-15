@@ -1,105 +1,190 @@
 const path = require('path')
-const webpack = require('webpack')
-const AssetsPlugin = require('assets-webpack-plugin')
+const dotenv = require('dotenv')
+const nodeExternals = require('webpack-node-externals')
+const ManifestPlugin = require('webpack-manifest-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const webpack = require('webpack')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 
-const NODE_ENV = process.env.NODE_ENV || 'development'
-const port = 8080
-const host = 'http://localhost'
+dotenv.config()
 
-// const sassLoadersDefault = [
-//   'style-loader',
-//   'css-loader?sourceMap',
-//   'postcss-loader',
-//   'sass-loader?sourceMap'
-// ]
+const isDev = process.env.NODE_ENV === 'development'
 
-module.exports = {
-  context: path.resolve(__dirname, 'src'),
-  entry: {
-    app: [
-      './client.js'
+const app_env_variables = Object
+  .keys(process.env)
+  .filter(key => {
+    return key.indexOf('APP_') === 0
+  })
+  .reduce((acc, key) => {
+    acc[key] = process.env[key]
+    return acc
+  }, {})
+
+app_env_variables.NODE_ENV = process.env.NODE_ENV
+app_env_variables.DEBUG = process.env.DEBUG
+
+const extractSass = new ExtractTextPlugin({
+    filename: isDev
+      ? 'main.css'
+      : '[name].[contenthash].css',
+    disable: isDev
+});
+
+var browserConfig = {
+  entry: './src/client.js',
+  output: {
+    path: path.resolve(__dirname, 'public/assets'),
+    filename: isDev
+      ? 'bundle.js'
+      : '[name].[chunkhash].js',
+    publicPath: '/'
+  },
+  resolve: {
+    modules: [
+      "node_modules",
+      path.resolve(__dirname, "src")
     ]
   },
-  output: {
-    filename: NODE_ENV === 'development'
-      ? 'js/[name].bundle.js'
-      : 'js/[name].[hash].bundle.js',
-    path: path.resolve(__dirname, './build/public'),
-    publicPath: NODE_ENV === 'development'
-      ? host + ':' + port + '/static/'
-      : '/static/'
-  },
+  devtool: isDev
+    ? 'cheap-eval-source-map'
+    : 'source-map',
+  stats: isDev
+    ? 'errors-only'
+    : 'minimal',
   module: {
     rules: [
       {
-        test: /\.(js)$/,
-        use: ['babel-loader'],
-        exclude: /(node_modules)/
+        enforce: "pre",
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "eslint-loader",
+        options: {
+          fix: true
+        }
       },
       {
-        test: /\.(json)$/,
-        use: ['json-loader']
+        test: /\.(png|svg|jpg|gif)$/,
+        use: [
+          'file-loader'
+        ]
+      },
+      {
+        test: /\.(js)$/,
+        exclude: /(node_modules|bower_components)/,
+        use: 'babel-loader'
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract({
-          loader: [
+        use: extractSass.extract({
+          use: [
             {
-              loader: 'css-loader',
-              query: {
-                sourceMap: true
+              loader: "css-loader",
+              options: {
+                sourceMap: true,
+                minimize: !isDev
               }
             },
             {
-              loader: 'postcss-loader'
+              loader: "postcss-loader",
+              options: { sourceMap: true }
             },
             {
-              loader: 'sass-loader',
-              query: {
-                sourceMap: true
-              }
+              loader: "sass-loader",
+              options: { sourceMap: true }
             }
           ],
-          fallbackLoader: 'style-loader'
+          // use style-loader in development
+          fallback: "style-loader"
         })
       }
     ]
   },
-  plugins: [
-    new AssetsPlugin({
-      path: path.resolve(__dirname, './build'),
-      prettyPrint: true
-    }),
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify(NODE_ENV)
-      }
-    }),
-    new ExtractTextPlugin(NODE_ENV === 'development'
-      ? 'styles/bundle.css'
-      : 'styles/[contentHash].bundle.css')
-  ],
-  resolve: {
-    extensions: [
-      '.js', '.json'
-    ],
-    modules: [
-      path.resolve(__dirname, './src'),
-      'node_modules'
-    ],
-    alias: {
-      react: path.resolve(__dirname, './node_modules/react'),
-      'react-dom': path.resolve(__dirname, './node_modules/react-dom')
-    }
-  },
-  devtool: NODE_ENV === 'development'
-    ? 'eval-source-map'
-    : 'source-map',
-  devServer: {
-    contentBase: path.resolve(__dirname, './build/public'),
-    stats: 'errors-only',
-    publicPath: '/static/',
-    port: port
-  }
+  plugins: isDev
+    ? [
+        new ManifestPlugin({
+          fileName: 'webpack-client-assets.json'
+        }),
+        extractSass,
+        new webpack.EnvironmentPlugin(app_env_variables),
+        new webpack.NamedModulesPlugin()
+      ]
+    : [
+        new ManifestPlugin({
+          fileName: 'webpack-client-assets.json'
+        }),
+        new CleanWebpackPlugin(['public/assets']),
+        extractSass,
+        new webpack.EnvironmentPlugin(app_env_variables),
+        new UglifyJsPlugin(),
+        new webpack.optimize.ModuleConcatenationPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(),
+      ]
 }
+
+var serverConfig = {
+  entry: './src/index.js',
+  target: 'node',
+  node: {
+    console: false,
+    global: false,
+    process: false,
+    __filename: false,
+    __dirname: false,
+    Buffer: false,
+    setImmediate: false
+  },
+  externals: [
+    nodeExternals()
+  ],
+  output: {
+    path: __dirname,
+    filename: 'index.js',
+    publicPath: '/'
+  },
+  resolve: {
+    modules: [
+      "node_modules",
+      path.resolve(__dirname, "src"),
+    ]
+  },
+  devtool: isDev
+    ? 'cheap-eval-source-map'
+    : 'source-map',
+  stats: isDev
+    ? 'errors-only'
+    : 'minimal',
+  module: {
+    rules: [
+      {
+        enforce: "pre",
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "eslint-loader",
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: [
+          'file-loader'
+        ]
+      },
+      {
+        test: /\.(js)$/,
+        exclude: /(node_modules)/,
+        use: 'babel-loader'
+      }
+    ]
+  },
+  plugins: isDev
+    ? [
+        new webpack.EnvironmentPlugin(app_env_variables),
+        new webpack.NamedModulesPlugin(),
+      ]
+    : [
+        new webpack.EnvironmentPlugin(app_env_variables),
+        new webpack.optimize.ModuleConcatenationPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(),
+      ]
+}
+
+module.exports = [browserConfig, serverConfig]

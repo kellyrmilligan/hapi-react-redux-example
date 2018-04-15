@@ -15,25 +15,35 @@ export default [
     handler: {
       proxy: {
         passThrough: true,
-        uri: `${process.env.API_URL}/{param}`
+        mapUri: function (request) {
+          // const headers = {
+          //   'Authorization': `token ${process.env.GITHUB_API_TOKEN}`,
+          //   'User-Agent': process.env.GITHUB_USERNAME
+          // }
+          return {
+            uri: `${process.env.APP_GITHUB_API_URL}/${request.params.param}`,
+          }
+          // return {
+          //   uri: `${process.env.GITHUB_API_URL}/${request.params.param}`,
+          //   headers
+          // }
+        },
       }
     }
   },
   {
     method: 'GET',
     path: '/static/{param*}',
-    config: {
-      cache: {
-        expiresIn: 1000 * 60 * 60 * 24 * 7 * 52// 1 year
-      },
+    options: {
       files: {
-        relativeTo: path.resolve(__dirname, '../public')
+        relativeTo: path.join(__dirname, 'public')
       }
     },
     handler: {
       directory: {
         path: '.',
-        redirectToSlash: true
+        redirectToSlash: true,
+        index: true,
       }
     }
   }

@@ -46,4 +46,4 @@ jspm_packages
 
 
 # generated stuff
-build
+./server.js

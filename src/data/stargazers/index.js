@@ -41,15 +41,9 @@ export function fetchStargazers (owner, repo) {
   return (dispatch, getState, serviceClient) => {
     dispatch(fetchStargazersLoading())
 
-    const { GITHUB_API_TOKEN } = getState().config
-
     return new Promise((resolve, reject) => {
       return serviceClient
-        .get(`/repos/${owner}/${repo}/stargazers`, {
-          headers: {
-            'Authorization': `token ${GITHUB_API_TOKEN}`
-          }
-        })
+        .get(`/repos/${owner}/${repo}/stargazers`)
         .then((res) => {
           resolve(res.body)
           dispatch(fetchStargazersSuccess(res.body))
