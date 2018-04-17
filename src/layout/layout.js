@@ -32,7 +32,7 @@ export default class Layout extends Component {
         <body>
           <div id='root' dangerouslySetInnerHTML={{ __html: content }} />
           <script dangerouslySetInnerHTML={{ __html: `window.__data=${state}` }} charSet='UTF-8' />
-          <script src={`/static/assets${assets['main.js']}`} defer />
+          <script src={process.env.NODE_ENV === 'development' ? `${assets['main.js']}` : `/static/assets${assets['main.js']}`} defer />
         </body>
       </html>
     )

@@ -32,13 +32,15 @@ const extractSass = new ExtractTextPlugin({
 });
 
 var browserConfig = {
-  entry: './src/client.js',
+  entry:'./src/client.js',
   output: {
     path: path.resolve(__dirname, 'public/assets'),
     filename: isDev
       ? 'bundle.js'
       : '[name].[chunkhash].js',
-    publicPath: '/'
+    publicPath: isDev
+      ? 'http://localhost:8080/'
+      : '/'
   },
   resolve: {
     modules: [
@@ -103,17 +105,19 @@ var browserConfig = {
   plugins: isDev
     ? [
         new ManifestPlugin({
-          fileName: 'webpack-client-assets.json'
+          fileName: 'webpack-client-assets.json',
+          writeToFileEmit: true,
         }),
         extractSass,
         new webpack.EnvironmentPlugin(app_env_variables),
-        new webpack.NamedModulesPlugin()
+        new webpack.NamedModulesPlugin(),
+        new webpack.HotModuleReplacementPlugin()
       ]
     : [
+        new CleanWebpackPlugin(['public/assets']),
         new ManifestPlugin({
           fileName: 'webpack-client-assets.json'
         }),
-        new CleanWebpackPlugin(['public/assets']),
         extractSass,
         new webpack.EnvironmentPlugin(app_env_variables),
         new UglifyJsPlugin(),

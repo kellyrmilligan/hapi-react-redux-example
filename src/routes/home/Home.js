@@ -1,19 +1,19 @@
 import React, { Component } from 'react'
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-
-import { fetchOrgRepos, getOrgRepos } from 'data/org-repos'
 
 const Home = class Home extends Component {
 
   static fetch (match, location, { dispatch }) {
-    return dispatch(fetchOrgRepos('hapijs'))
   }
 
   render () {
     return (
       <main>
+        <Helmet>
+          <title>Homies</title>
+        </Helmet>
         <h1>Repos</h1>
         {this.props.orgRepos &&
           <ul>
@@ -32,12 +32,11 @@ const Home = class Home extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    orgRepos: getOrgRepos(state)
-  }
-}
+// const mapStateToProps = (state, ownProps) => {
+//   return {
+//   }
+// }
 
 export default connect(
-  mapStateToProps
+  // mapStateToProps
 )(Home)
