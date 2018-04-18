@@ -24,6 +24,8 @@ module.exports = {
 
     server.hapiReactRedux(hapiReactReduxOptions)
 
+    console.log(process.env.EVENTBRITE_API_TOKEN)
+
     // configure the service client for requests
     serviceClient.apiUrl = `http://${process.env.APP_SERVER_HOST}:${process.env.APP_SERVER_PORT}${process.env.APP_API_URL}`
 

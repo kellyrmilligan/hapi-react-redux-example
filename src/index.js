@@ -1,8 +1,16 @@
 import dotenv from 'dotenv'
+import fs from 'fs'
+import path from 'path'
 import cluster from 'cluster'
 import initServer from './server'
 
 dotenv.config()
+
+if (fs.existsSync(path.resolve('.env.local'))) {
+  dotenv.config({
+    path: path.resolve('.env.local'),
+  })
+}
 
 async function startServer () {
   try {

@@ -46,4 +46,6 @@ jspm_packages
 
 
 # generated stuff
-./server.js
+./index.js
+./public/assets
+./.env.local

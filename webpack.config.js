@@ -38,9 +38,7 @@ var browserConfig = {
     filename: isDev
       ? 'bundle.js'
       : '[name].[chunkhash].js',
-    publicPath: isDev
-      ? 'http://localhost:8080/'
-      : '/'
+    publicPath: '/'
   },
   resolve: {
     modules: [
@@ -111,7 +109,6 @@ var browserConfig = {
         extractSass,
         new webpack.EnvironmentPlugin(app_env_variables),
         new webpack.NamedModulesPlugin(),
-        new webpack.HotModuleReplacementPlugin()
       ]
     : [
         new CleanWebpackPlugin(['public/assets']),
