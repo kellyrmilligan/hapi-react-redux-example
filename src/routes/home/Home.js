@@ -3,18 +3,21 @@ import { Helmet } from 'react-helmet'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
+import { fetchCategories } from 'data/categories'
+
 const Home = class Home extends Component {
 
   static fetch (match, location, { dispatch }) {
+    return dispatch(fetchCategories())
   }
 
   render () {
     return (
       <main>
         <Helmet>
-          <title>Homies</title>
+          <title>Home</title>
         </Helmet>
-        <h1>Repos</h1>
+        <h1>Event Categories</h1>
         {this.props.orgRepos &&
           <ul>
             {this.props.orgRepos.repos.map((repo) =>

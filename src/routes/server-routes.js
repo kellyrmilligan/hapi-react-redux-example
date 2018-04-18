@@ -16,17 +16,13 @@ export default [
       proxy: {
         passThrough: true,
         mapUri: function (request) {
-          // const headers = {
-          //   'Authorization': `token ${process.env.GITHUB_API_TOKEN}`,
-          //   'User-Agent': process.env.GITHUB_USERNAME
-          // }
-          return {
-            uri: `${process.env.APP_GITHUB_API_URL}/${request.params.param}`,
+          const headers = {
+            'Authorization': `Bearer ${process.env.EVENTBRITE_API_TOKEN}`,
           }
-          // return {
-          //   uri: `${process.env.GITHUB_API_URL}/${request.params.param}`,
-          //   headers
-          // }
+          return {
+            uri: `${process.env.EVENTBRITE_API_URL}/${request.params.param}`,
+            headers
+          }
         },
       }
     }

@@ -15,16 +15,12 @@ module.exports = {
     const hapiReactReduxOptions = {
       routes: clientRoutes,
       layout: layout,
-      config: {
-        API_URL: '/api', // the client is going to go through a proxy
-      }, // if you want to filter the config down at all, ie some api secret key should only be on server, create a new object or filter it down further
+      config: {},
       assets: JSON.parse(manifest),
       configureStore
     }
 
     server.hapiReactRedux(hapiReactReduxOptions)
-
-    console.log(process.env.EVENTBRITE_API_TOKEN)
 
     // configure the service client for requests
     serviceClient.apiUrl = `http://${process.env.APP_SERVER_HOST}:${process.env.APP_SERVER_PORT}${process.env.APP_API_URL}`
