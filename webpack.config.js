@@ -38,7 +38,7 @@ var browserConfig = {
     filename: isDev
       ? 'bundle.js'
       : '[name].[chunkhash].js',
-    publicPath: '/'
+    publicPath: '/static/assets/'
   },
   resolve: {
     modules: [
@@ -47,7 +47,7 @@ var browserConfig = {
     ]
   },
   devtool: isDev
-    ? 'cheap-eval-source-map'
+    ? 'cheap-module-source-map'
     : 'source-map',
   stats: isDev
     ? 'errors-only'
@@ -150,7 +150,7 @@ var serverConfig = {
     ]
   },
   devtool: isDev
-    ? 'cheap-eval-source-map'
+    ? 'cheap-module-source-map'
     : 'source-map',
   stats: isDev
     ? 'errors-only'

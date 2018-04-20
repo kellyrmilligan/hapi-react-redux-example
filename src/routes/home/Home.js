@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { fetchCategories } from 'data/categories'
+import { fetchCategories, getCategories } from 'data/categories'
 
 const Home = class Home extends Component {
 
@@ -12,20 +12,24 @@ const Home = class Home extends Component {
   }
 
   render () {
+
+    const {
+      categoryResults: { data: categoriesData }
+    } = this.props
+
     return (
       <main>
         <Helmet>
-          <title>Home</title>
+          <title>Event Categories</title>
         </Helmet>
         <h1>Event Categories</h1>
-        {this.props.orgRepos &&
+        {categoriesData && categoriesData.categories && categoriesData.categories.length > 0 &&
           <ul>
-            {this.props.orgRepos.repos.map((repo) =>
-              <li key={repo.id}>
+            {categoriesData.categories.map(category =>
+              <li key={category.id}>
                 <h2>
-                  <Link to={`/repos/${repo.owner.login}/${repo.name}/stargazers`}>{repo.name}</Link>
+                  <Link to={`/categories/${category.id}`}>{category.name}</Link>
                 </h2>
-                <p>{repo.description}</p>
               </li>
             )}
           </ul>
@@ -35,11 +39,12 @@ const Home = class Home extends Component {
   }
 }
 
-// const mapStateToProps = (state, ownProps) => {
-//   return {
-//   }
-// }
+const mapStateToProps = (state, ownProps) => {
+  return {
+    categoryResults: getCategories(state)
+  }
+}
 
 export default connect(
-  // mapStateToProps
+  mapStateToProps
 )(Home)

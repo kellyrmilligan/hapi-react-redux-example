@@ -1,7 +1,7 @@
 import React from 'react'
 import App from 'components/App'
 import Home from 'routes/home/Home'
-import Stargazers from 'routes/stargazers/Stargazers'
+import Category from './categories/Category';
 
 const NotFound = () => (
   <main>
@@ -20,8 +20,8 @@ const routes = [
         component: Home
       },
       {
-        path: '/repos/:owner/:repo/stargazers',
-        component: Stargazers
+        path: '/categories/:id',
+        component: Category
       },
       {
         component: NotFound

@@ -15,6 +15,7 @@ export default [
     handler: {
       proxy: {
         passThrough: true,
+        redirects: 2,
         mapUri: function (request) {
           const headers = {
             'Authorization': `Bearer ${process.env.EVENTBRITE_API_TOKEN}`,
