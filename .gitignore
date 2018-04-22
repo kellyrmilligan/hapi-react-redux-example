@@ -47,5 +47,6 @@ jspm_packages
 
 # generated stuff
 /index.js
+/index.js.map
 /public/assets
 /.env.local
